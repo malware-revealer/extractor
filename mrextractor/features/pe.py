@@ -3,18 +3,18 @@ PE Feature Classes.
 Contain feature classes that are proper to the PE format
 """
 
-from .base import BaseFeature
-from .utils import *
+from mrextractor.features import BaseFeature
+from mrextractor.features.utils import lief_from_raw
 import lief
 from lief.PE import SECTION_CHARACTERISTICS as SC
 
 
-class GeneralFileInfo(BaseFeature):
+class PEGeneralFileInfo(BaseFeature):
     """
     this class is used to extract the General information from the PE file,
     such as the file size, number of export,import functions ...etc
     """
-    name = "General information"
+    name = "pe_general_information"
 
     def __init__(self):
         super(BaseFeature, self).__init__()
@@ -61,8 +61,8 @@ class GeneralFileInfo(BaseFeature):
         return features
 
 
-class MSDOSHeader(BaseFeature):
-    name = "MS-DOS Header"
+class PEMSDOSHeader(BaseFeature):
+    name = "pe_msdos_header"
 
     def __init__(self):
         super(BaseFeature, self).__init__()
@@ -103,7 +103,7 @@ class MSDOSHeader(BaseFeature):
 
 
 class PEHeader(BaseFeature):
-    name = "PE Header"
+    name = "pe_header"
 
     def __init__(self):
         super(BaseFeature, self).__init__()
@@ -143,8 +143,8 @@ class PEHeader(BaseFeature):
         return features
 
 
-class OptionalHeader(BaseFeature):
-    name = "Optional_Header"
+class PEOptionalHeader(BaseFeature):
+    name = "optional_header"
 
     def __init__(self):
         super(BaseFeature, self).__init__()
@@ -197,12 +197,12 @@ class OptionalHeader(BaseFeature):
 
         return features
 
-class Libraries(BaseFeature):
+class PELibraries(BaseFeature):
     """
     Get the number and the list of all the imported libraries.
     """
 
-    name = 'libraries'
+    name = 'pe_libraries'
 
     def extract_features(self, raw_exe):
         lief_file = lief_from_raw(raw_exe)
@@ -214,13 +214,13 @@ class Libraries(BaseFeature):
         return features
 
 
-class Sections(BaseFeature):
+class PESections(BaseFeature):
     """
     Get the number of sections and informations about each individual section
     in the PE file.
     """
 
-    name = 'sections'
+    name = 'pe_sections'
 
     def extract_features(self, raw_exe):
         lief_file = lief_from_raw(raw_exe)

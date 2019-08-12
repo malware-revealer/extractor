@@ -7,28 +7,41 @@ import re
 from PIL import Image
 from math import sqrt
 
-from .utils import lief_from_raw
+from mrextractor.features.utils import lief_from_raw
 
 
 class BaseFeature(object):
     """
-    The building block of other feature classes.
-    Implement default behaviours.
+    Contains methods to all extractors.
+
+    All the extractor classes should extend this class to inherit the common
+    behaviours for extractor.
+    Classes that extends from this one should redefine can_extract() method
+    if necessary and extract_features() for which implements the feature
+    extraction logic.
     """
 
     name = ''
     is_image = False
 
-    def can_extract(self, raw_exe):
+    def can_extract(self, raw_exe: bytes) -> bool:
         """
         Tell if this feature can be extracted from the provided raw_exe file.
-        Default to True. Should be re-implemented when constraints apply.
+        Default to True.
+        Should be re-implemented when constraints apply.
+
+        Args:
+            raw_exe: the executable to extract features from.
         """
         return True
 
-    def extract_features(self, raw_exe):
+    def extract_features(self, raw_exe: bytes) -> dict:
         """
+        The method that implement the
         To extracted the  wanted features, the output of this fuction depends on the feature
+
+        Args:
+            raw_exe: the executable to extract features from.
         """
         raise NotImplementedError
 
@@ -142,7 +155,7 @@ class Strings(BaseFeature):
     """Get the number of strings(+5 char), strings set, avrege length, paths set,
     paths number ,registry and MZ headers number."""
 
-    name = 'Strings'
+    name = 'strings'
 
     RE_STRING = br'[\w$&!]{5,}'
     RE_PATH = br'[A-Z]:\\[\w\\\. ]*'

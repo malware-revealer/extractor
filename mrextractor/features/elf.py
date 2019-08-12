@@ -3,12 +3,13 @@ ELF Feature Classes.
 Contain feature classes that are proper to the ELF format
 """
 
-from .base import BaseFeature
-from .utils import lief_from_raw
+from mrextractor.features import BaseFeature
+from mrextractor.features.utils import lief_from_raw
 
 
 class BaseELFFeature(BaseFeature):
-    """Base feature extractor for ELF extractors
+    """
+    Base feature extractor for ELF extractors.
     Implement the default can_extract method.
     """
 
@@ -49,8 +50,8 @@ class ELFHeader(BaseELFFeature):
         return features
 
 
-class Sections(BaseELFFeature):
-    name = 'sections'
+class ELFSections(BaseELFFeature):
+    name = 'elf_sections'
 
     def extract_features(self, raw_exe):
         lief_file = lief_from_raw(raw_exe)
