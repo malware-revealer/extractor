@@ -6,7 +6,7 @@ import logging as log
 from Crypto.Hash import MD5
 from binascii import hexlify
 
-FEATURE_BASE_PACKAGE = "features"
+FEATURE_BASE_PACKAGE = "mrextractor.features"
 JSON_FOLDER = "json"
 IMAGE_FOLDER = "image"
 
@@ -44,6 +44,7 @@ class Extractor(object):
                         image_format = extracted_features['image_format']
                         save_features_image(name, image, image_format, label, feature.name, self.out_folder)
                     else:
+                        # TODO: check for duplicates
                         features_dict.update(extracted_features)
                 except Exception as e:
                     log.error("Error while using feature class %s", feature)
