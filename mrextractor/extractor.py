@@ -210,7 +210,7 @@ def new(conf_file, in_folder, out_folder):
     """
 
     stream = open(conf_file)
-    conf = yaml.load(stream)
+    conf = yaml.safe_load(stream)
     stream.close()
 
     features = get_features_from_conf(conf)
