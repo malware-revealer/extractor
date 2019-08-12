@@ -10,7 +10,7 @@ requirements = read("requirements.txt").split()
 
 setuptools.setup(
     name="mrextractor",
-    version="0.0.1a",
+    version="0.0.1a1",
     author="Malware Revealer",
     author_email="revealer.malware@gmail.com",
     description="A library for binaries feature extraction",
@@ -26,4 +26,10 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
+    # the executable script for making batch extraction on datasets
+    entry_points={
+        'console_scripts': [
+            'mrextract = mrextractor.__main__:main',
+        ]
+    }
 )

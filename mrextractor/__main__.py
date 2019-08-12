@@ -1,4 +1,4 @@
-import Extractor
+import mrextractor as mre
 import argparse
 import logging as log
 
@@ -28,8 +28,7 @@ def create_arg_parser():
 
     return parser
 
-
-if __name__ == '__main__':
+def main():
     arg_parser = create_arg_parser()
     args = arg_parser.parse_args()
 
@@ -48,6 +47,10 @@ if __name__ == '__main__':
     )
 
     log.info("Starting extraction")
-    extractor = Extractor.new(conf_file, in_folder, out_folder)
+    extractor = mre.new(conf_file, in_folder, out_folder)
     extractor.extract_batch()
     log.info("Extraction ended successfully")
+
+
+if __name__ == '__main__':
+    main()
