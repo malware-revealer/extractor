@@ -2,3 +2,4 @@ lief
 numpy
 Pillow
 pyyaml
+pycrypto
