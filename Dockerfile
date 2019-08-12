@@ -1,17 +1,11 @@
-FROM ubuntu:18.04
+# This image is for a production ready extractor
 
-ENV APP_PATH /opt/extractor/
+FROM python:3.6-slim
 
-# Install requirements
-RUN apt-get update && apt-get install -y python3 python3-pip
-# Install python modules
-COPY requirements.txt /
-RUN pip3 install --no-cache-dir -r requirements.txt
-
-# Copy source files
-RUN mkdir $APP_PATH
-WORKDIR $APP_PATH
-COPY . $APP_PATH
+# Install deps
+RUN apt-get update && apt-get install -y gcc
+# Install mrextractor
+RUN pip3 install --no-cache-dir mrextractor
 
 # Execute the extractor by default
-ENTRYPOINT ["python3", "extract.py"]
+#ENTRYPOINT ["python3", "extract.py"]
