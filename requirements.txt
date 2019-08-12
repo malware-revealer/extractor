@@ -1,3 +1,4 @@
 lief
 numpy
 Pillow
+pyyaml

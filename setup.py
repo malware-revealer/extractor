@@ -10,7 +10,7 @@ requirements = read("requirements.txt").split()
 
 setuptools.setup(
     name="mrextractor",
-    version="0.0.1.dev1",
+    version="0.0.1.dev2",
     author="Malware Revealer",
     author_email="revealer.malware@gmail.com",
     description="A library for binaries feature extraction",
