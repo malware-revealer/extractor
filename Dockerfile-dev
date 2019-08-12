@@ -1,0 +1,14 @@
+# This image is intended to install mrextractor from the working code
+# thus having the last version running.
+
+FROM python:3.6-slim
+
+ENV APP_PATH /opt/extractor/
+
+# Install deps
+RUN apt-get update && apt-get install -y gcc
+
+# Install mrextractor
+COPY ./ $APP_PATH
+WORKDIR $APP_PATH
+RUN python3 setup.py install
