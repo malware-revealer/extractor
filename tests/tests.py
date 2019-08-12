@@ -1,6 +1,6 @@
 import unittest
 import json
-import Extractor
+import mrextractor
 
 class TestExtractor(unittest.TestCase):
 
@@ -11,7 +11,7 @@ class TestExtractor(unittest.TestCase):
         conf_file = "test_assets/extractor_conf.yaml"
         in_folder = "test_assets/executables/pe"
         out_folder = "test_assets/extracted_features"
-        extractor = Extractor.new(conf_file, in_folder, out_folder)
+        extractor = mrextractor.new(conf_file, in_folder, out_folder)
         feature_list = list(extractor.features.keys())
         expected_feature_list = sorted([
                                     'base.ByteCounts',
@@ -21,13 +21,15 @@ class TestExtractor(unittest.TestCase):
                                     'base.ImportedFunctions',
                                     'base.ExportedFunctions',
                                     'base.Strings',
-                                    'pe.GeneralFileInfo',
-                                    'pe.MSDOSHeader',
+                                    'pe.PEGeneralFileInfo',
+                                    'pe.PEMSDOSHeader',
                                     'pe.PEHeader',
-                                    'pe.OptionalHeader',
-                                    'pe.Libraries',
-                                    'pe.Sections',
+                                    'pe.PEOptionalHeader',
+                                    'pe.PELibraries',
+                                    'pe.PESections',
                                     'elf.ELFHeader',
+                                    'elf.ELFLibraries',
+                                    'elf.ELFSections',
                                     ])
         self.assertEqual(
             sorted(feature_list),
@@ -43,7 +45,7 @@ class TestExtractor(unittest.TestCase):
         conf_file = "test_assets/extractor_confs/pe_header_conf.yaml"
         in_folder = "test_assets/executables/pe"
         out_folder = "test_assets/extracted_features/pe_header"
-        extractor = Extractor.new(conf_file, in_folder, out_folder)
+        extractor = mrextractor.new(conf_file, in_folder, out_folder)
         extractor.extract_batch()
         feature_dict = extractor.features
         with open("test_assets/expected_features_dicts/pe_header.json" ,"rb") as f1:
@@ -64,7 +66,7 @@ class TestExtractor(unittest.TestCase):
         conf_file = "test_assets/extractor_confs/libraries_conf.yaml"
         in_folder = "test_assets/executables/pe"
         out_folder = "test_assets/extracted_features/libraries"
-        extractor = Extractor.new(conf_file, in_folder, out_folder)
+        extractor = mrextractor.new(conf_file, in_folder, out_folder)
         extractor.extract_batch()
         feature_dict = extractor.features
         with open("test_assets/expected_features_dicts/libraries.json" ,"rb") as f1:
@@ -86,7 +88,7 @@ class TestExtractor(unittest.TestCase):
         conf_file = "test_assets/extractor_confs/sections_conf.yaml"
         in_folder = "test_assets/executables/pe"
         out_folder = "test_assets/extracted_features/sections"
-        extractor = Extractor.new(conf_file, in_folder, out_folder)
+        extractor = mrextractor.new(conf_file, in_folder, out_folder)
         extractor.extract_batch()
         feature_dict = extractor.features
         with open("test_assets/expected_features_dicts/sections.json" ,"rb") as f1:
@@ -106,7 +108,7 @@ class TestExtractor(unittest.TestCase):
         conf_file = "test_assets/extractor_confs/general_file_info_conf.yaml"
         in_folder = "test_assets/executables/pe"
         out_folder = "test_assets/extracted_features/general_file_info"
-        extractor = Extractor.new(conf_file, in_folder, out_folder)
+        extractor = mrextractor.new(conf_file, in_folder, out_folder)
         extractor.extract_batch()
         features_dict = extractor.features
         with open("test_assets/expected_features_dicts/general_file_info.json","rb") as f1:
@@ -127,7 +129,7 @@ class TestExtractor(unittest.TestCase):
         conf_file = "test_assets/extractor_confs/msdos_header_conf.yaml"
         in_folder = "test_assets/executables/pe"
         out_folder = "test_assets/extracted_features/msdos_header"
-        extractor = Extractor.new(conf_file, in_folder, out_folder)
+        extractor = mrextractor.new(conf_file, in_folder, out_folder)
         extractor.extract_batch()
         features_dict = extractor.features
         with open("test_assets/expected_features_dicts/msdos_header.json","rb") as f1:
@@ -148,7 +150,7 @@ class TestExtractor(unittest.TestCase):
         conf_file = "test_assets/extractor_confs/optional_header_conf.yaml"
         in_folder = "test_assets/executables/pe"
         out_folder = "test_assets/extracted_features/optional_header"
-        extractor = Extractor.new(conf_file, in_folder, out_folder)
+        extractor = mrextractor.new(conf_file, in_folder, out_folder)
         extractor.extract_batch()
         features_dict = extractor.features
         with open("test_assets/expected_features_dicts/optional_header.json","rb") as f1:
@@ -169,7 +171,7 @@ class TestExtractor(unittest.TestCase):
         conf_file = "test_assets/extractor_confs/file_size_conf.yaml"
         in_folder = "test_assets/executables/pe"
         out_folder = "test_assets/extracted_features/file_size"
-        extractor = Extractor.new(conf_file, in_folder, out_folder)
+        extractor = mrextractor.new(conf_file, in_folder, out_folder)
         extractor.extract_batch()
         features_dict = extractor.features
         with open("test_assets/expected_features_dicts/file_size.json","rb") as f1:
@@ -189,7 +191,7 @@ class TestExtractor(unittest.TestCase):
         conf_file = "test_assets/extractor_confs/urls_conf.yaml"
         in_folder = "test_assets/executables/pe"
         out_folder = "test_assets/extracted_features/urls"
-        extractor = Extractor.new(conf_file, in_folder, out_folder)
+        extractor = mrextractor.new(conf_file, in_folder, out_folder)
         extractor.extract_batch()
         features_dict = extractor.features
         with open("test_assets/expected_features_dicts/urls.json","rb") as f1:
@@ -210,7 +212,7 @@ class TestExtractor(unittest.TestCase):
         conf_file = "test_assets/extractor_confs/imported_functions_conf.yaml"
         in_folder = "test_assets/executables/pe"
         out_folder = "test_assets/extracted_features/imported_functions"
-        extractor = Extractor.new(conf_file, in_folder, out_folder)
+        extractor = mrextractor.new(conf_file, in_folder, out_folder)
         extractor.extract_batch()
         features_dict = extractor.features
         with open("test_assets/expected_features_dicts/imported_functions.json","rb") as f1:
@@ -231,7 +233,7 @@ class TestExtractor(unittest.TestCase):
         conf_file = "test_assets/extractor_confs/byte_counts_conf.yaml"
         in_folder = "test_assets/executables/pe"
         out_folder = "test_assets/extracted_features/byte_counts"
-        extractor = Extractor.new(conf_file, in_folder, out_folder)
+        extractor = mrextractor.new(conf_file, in_folder, out_folder)
         extractor.extract_batch()
         features_dict = extractor.features
         with open("test_assets/expected_features_dicts/byte_counts.json","rb") as f1:
@@ -251,7 +253,7 @@ class TestExtractor(unittest.TestCase):
         conf_file = "test_assets/extractor_confs/exported_functions_conf.yaml"
         in_folder = "test_assets/executables/pe"
         out_folder = "test_assets/extracted_features/exported_functions"
-        extractor = Extractor.new(conf_file, in_folder, out_folder)
+        extractor = mrextractor.new(conf_file, in_folder, out_folder)
         extractor.extract_batch()
         features_dict = extractor.features
         with open("test_assets/expected_features_dicts/exported_functions.json","rb") as f1:
@@ -287,7 +289,7 @@ class TestExtractor(unittest.TestCase):
         conf_file = "test_assets/extractor_confs/binary_image_conf.yaml"
         in_folder = "test_assets/executables/pe"
         out_folder = "test_assets/extracted_features/binary_image"
-        extractor = Extractor.new(conf_file, in_folder, out_folder)
+        extractor = mrextractor.new(conf_file, in_folder, out_folder)
         extractor.extract_batch()
         extracted_image_features = extractor.features
         extracted_image =  Image.open("test_assets/expected_features_images/binary_image.png")
@@ -307,7 +309,7 @@ class TestExtractor(unittest.TestCase):
         conf_file = "test_assets/extractor_confs/strings_conf.yaml"
         in_folder = "test_assets/executables/pe"
         out_folder = "test_assets/extracted_features/strings"
-        extractor = Extractor.new(conf_file, in_folder, out_folder)
+        extractor = mrextractor.new(conf_file, in_folder, out_folder)
         extractor.extract_batch()
         features_dict = extractor.features
         with open("test_assets/expected_features_dicts/strings.json","rb") as f1:
@@ -329,7 +331,7 @@ class TestExtractor(unittest.TestCase):
         conf_file = "test_assets/extractor_confs/elf_header_conf.yaml"
         in_folder = "test_assets/executables/elf"
         out_folder = "test_assets/extracted_features/elf_header"
-        extractor = Extractor.new(conf_file, in_folder, out_folder)
+        extractor = mrextractor.new(conf_file, in_folder, out_folder)
         extractor.extract_batch()
 
         with open("test_assets/expected_features_dicts/elf_header.json","rb") as f1:
@@ -353,7 +355,7 @@ class TestExtractor(unittest.TestCase):
         conf_file = "test_assets/extractor_confs/elf_sections_conf.yaml"
         in_folder = "test_assets/executables/elf"
         out_folder = "test_assets/extracted_features/elf_sections"
-        extractor = Extractor.new(conf_file, in_folder, out_folder)
+        extractor = mrextractor.new(conf_file, in_folder, out_folder)
         extractor.extract_batch()
 
         with open("test_assets/expected_features_dicts/elf_sections.json","rb") as f1:
@@ -376,7 +378,7 @@ class TestExtractor(unittest.TestCase):
         conf_file = "test_assets/extractor_confs/elf_libraries_conf.yaml"
         in_folder = "test_assets/executables/elf"
         out_folder = "test_assets/extracted_features/elf_libraries"
-        extractor = Extractor.new(conf_file, in_folder, out_folder)
+        extractor = mrextractor.new(conf_file, in_folder, out_folder)
         extractor.extract_batch()
 
         with open("test_assets/expected_features_dicts/elf_libraries.json","rb") as f1:

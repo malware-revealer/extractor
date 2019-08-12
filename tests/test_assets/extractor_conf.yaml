@@ -8,11 +8,13 @@ features:
     - ExportedFunctions
     - Strings
   pe:
-    - GeneralFileInfo
-    - MSDOSHeader
+    - PEGeneralFileInfo
+    - PEMSDOSHeader
     - PEHeader
-    - OptionalHeader
-    - Libraries
-    - Sections
+    - PEOptionalHeader
+    - PELibraries
+    - PESections
   elf:
     - ELFHeader
+    - ELFLibraries
+    - ELFSections
