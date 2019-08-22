@@ -8,4 +8,4 @@ RUN apt-get update && apt-get install -y gcc
 RUN pip3 install --no-cache-dir mrextractor
 
 # Execute the extractor by default
-#ENTRYPOINT ["python3", "extract.py"]
+ENTRYPOINT ["mrextract"]
