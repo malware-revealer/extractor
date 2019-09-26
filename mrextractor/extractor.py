@@ -1,3 +1,6 @@
+"""
+Core components for the extraction.
+"""
 import yaml
 import importlib
 import os
@@ -12,11 +15,16 @@ IMAGE_FOLDER = "image"
 
 class Extractor(object):
     """
-    Responsible of calling each feature extractor by first making sure
-    it can extract them without any issues, then get those features.
+    Main object orchestrating the extraction pipeline.
     """
 
     def __init__(self, features, in_folder, out_folder):
+        """
+        Args:
+            features: feature extractor classes to use for the extraction.
+            in_folder: path to get executables from.
+            out_folder: path to store output files to.
+        """
         self.features = features
         self.in_folder = in_folder
         self.out_folder = out_folder
@@ -59,9 +67,11 @@ def extract_one(exe, conf):
     Extract features from only one executable file according to
     the features list.
 
-    params:
-    executable is the executable to extract features from represented as bytes.
-    conf is the extractor configuration represented as a dictionnary.
+    Args:
+        exe: byte-like object to extract features from.
+        conf: dictionnary representing the extractor configuration.
+    Returns:
+        Both features and images extracted from the exe using the conf provided.
     """
 
     features = get_features_from_conf(conf)
@@ -97,6 +107,14 @@ def get_file_name(exe):
 
 
 def prepare_extraction(features, in_folder, out_folder):
+    """
+    Create the necessary folders for the extraction.
+
+    Args:
+        features: list of features to get names of image_extractor from.
+        in_folder: path to input files to get labels from.
+        out_folder: path to the output folder where to store output files.
+    """
     # Get image feature extractors
     image_extractors = []
     for feature in features:
@@ -109,6 +127,14 @@ def prepare_extraction(features, in_folder, out_folder):
 
 
 def prepare_extraction_(out_folder, labels, image_extractors):
+    """
+    Helper function for creating the necessary folders for the extraction.
+
+    Args:
+        out_folder: path to the output folder where to store output files.
+        labels: list of labels (names)
+        image_extractors: list of image extractor (names)
+    """
     json_out = os.path.join(out_folder, JSON_FOLDER)
     image_out = os.path.join(out_folder, IMAGE_FOLDER)
     create_dir_if_does_not_exist(json_out)
@@ -130,6 +156,14 @@ def prepare_extraction_(out_folder, labels, image_extractors):
 
 
 def iter_executables(in_folder):
+    """
+    Iterate over a folder returning executables with their name and label.
+
+    Args:
+        in_folder: path where to start looking for executables.
+    Returns:
+        Sequence of (name, executable, label)
+    """
     labels = get_labels_from_folder(in_folder)
     for label in labels:
         label_path = os.path.join(in_folder, label)
@@ -146,11 +180,31 @@ def iter_executables(in_folder):
 
 
 def save_features_image(name, image, image_format, label, feature_name, out_folder):
+    """
+    Save the feature image into an image file.
+
+    Args:
+        name: name of the file to be created.
+        image: PIL.Image object
+        image_format: the format to be used while saving the image (e.g png).
+        label: to be used to find the exact subfolder to save the image.
+        feature_name: to be used to find the exact subfolder to save the image.
+        out_folder: to be used to find the exact folder to save the image.
+    """
     image_path = os.path.join(out_folder, IMAGE_FOLDER, feature_name, label, name + '.' + image_format)
     image.save(image_path)
 
 
 def save_features_json(name, features_dict, label, out_folder):
+    """
+    Save the features into a json file.
+
+    Args:
+        name: name of the file to be created.
+        features_dict: the actual features to save.
+        label: to be used to find the exact subfolder to save the features.
+        out_folder: to be used to find the exact folder to save the features.
+    """
     file_path = os.path.join(out_folder, JSON_FOLDER, label, name + '.json')
     file = open(file_path, 'w')
     json.dump(features_dict, file)
@@ -158,6 +212,14 @@ def save_features_json(name, features_dict, label, out_folder):
 
 
 def get_labels_from_folder(folder):
+    """
+    Get labels of executables by going through folder names
+
+    Args:
+        folder: path from where to get the labels
+    Returns:
+        List of labels
+    """
     labels = []
     for file in os.listdir(folder):
         if os.path.isdir(os.path.join(folder, file)):
@@ -173,7 +235,11 @@ def create_dir_if_does_not_exist(folder):
 def get_features_from_conf(conf):
     """
     Get the feature classes defined by the conf file.
-    conf should be an opened file.
+
+    Args:
+        conf: opened file containing the configuration for the extractor.
+    Returns:
+        A dictionnary of feature classes.
     """
 
     features = {}
@@ -201,12 +267,14 @@ def new(conf_file, in_folder, out_folder):
     Build an extractor according to the configuration file which list
     feature classes that should be used.
 
-    params:
-    in_folder contains a subfolder of executables for each label.
-    out_folder will contain two main folders, json/ and image/.
-      - json/ will contain a subfolder of extracted features for each label
+    Args:
+    in_folder: path for a folder that contains a subfolder of executables for each label.
+    out_folder: path where to store output files, will contain two main folders, json/ and image/.
+        - json/ will contain a subfolder of extracted features for each label
         - image/ will contain a subfolder for each type of image extraction
-          - those folders will then contain a subfolder of images for each label
+        - those folders will then contain a subfolder of images for each label
+    Returns:
+        An Extractor object
     """
 
     stream = open(conf_file)

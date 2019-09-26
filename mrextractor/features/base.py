@@ -32,6 +32,8 @@ class BaseFeature(object):
 
         Args:
             raw_exe: the executable to extract features from.
+        Returns:
+            Boolean answering the 'can extract?' question.
         """
         return True
 
@@ -42,6 +44,8 @@ class BaseFeature(object):
 
         Args:
             raw_exe: the executable to extract features from.
+        Returns:
+            dictionnary containing features extracted.
         """
         raise NotImplementedError
 
