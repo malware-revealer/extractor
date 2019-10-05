@@ -2,7 +2,7 @@
 ELF Feature Classes.
 Contain feature classes that are proper to the ELF format
 """
-
+import lief
 from mrextractor.features import BaseFeature
 from mrextractor.features.utils import lief_from_raw
 
