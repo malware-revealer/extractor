@@ -34,6 +34,5 @@ jobs:
         python setup.py install
     - name: Test with unittest
       working-directory: ./tests
-      run: |
-        pip install unittest
+      run:
         python -m unittest tests.py
