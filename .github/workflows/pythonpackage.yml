@@ -33,6 +33,7 @@ jobs:
       run: |
         python setup.py install
     - name: Test with unittest
+      working-directory: ./tests
       run: |
         pip install unittest
-        python -m unittest tests/tests.py
+        python -m unittest tests.py
