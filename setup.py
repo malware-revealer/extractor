@@ -15,7 +15,8 @@ setuptools.setup(
     author_email="revealer.malware@gmail.com",
     description="A library for binaries feature extraction",
     license="MIT",
-    keywords="malware detection binary analysis feature extraction cyber security",
+    keywords="malware detection binary analysis feature extraction cyber \
+        security",
     long_description=read("README.md"),
     long_description_content_type="text/markdown",
     url="https://github.com/malware-revealer/extractor",

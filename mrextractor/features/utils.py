@@ -1,5 +1,6 @@
 import lief
 
+
 def lief_from_raw(bytes):
     """Create a lief binary object from raw bytes"""
 

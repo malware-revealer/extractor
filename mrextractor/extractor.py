@@ -13,6 +13,7 @@ FEATURE_BASE_PACKAGE = "mrextractor.features"
 JSON_FOLDER = "json"
 IMAGE_FOLDER = "image"
 
+
 class Extractor(object):
     """
     Main object orchestrating the extraction pipeline.
@@ -50,7 +51,9 @@ class Extractor(object):
                     if feature.is_image:
                         image = extracted_features['image']
                         image_format = extracted_features['image_format']
-                        save_features_image(name, image, image_format, label, feature.name, self.out_folder)
+                        save_features_image(
+                            name, image, image_format, label,
+                            feature.name, self.out_folder)
                     else:
                         # logs duplicates feature names before merging
                         check_duplicates(features_dict, extracted_features)
@@ -62,7 +65,6 @@ class Extractor(object):
             save_features_json(name, features_dict, label, self.out_folder)
 
 
-
 def extract_one(exe, conf):
     """
     Extract features from only one executable file according to
@@ -72,7 +74,8 @@ def extract_one(exe, conf):
         exe: byte-like object to extract features from.
         conf: dictionnary representing the extractor configuration.
     Returns:
-        Both features and images extracted from the exe using the conf provided.
+        Both features and images extracted from the exe
+        using the conf provided.
     """
 
     features = get_features_from_conf(conf)
@@ -158,19 +161,20 @@ def prepare_extraction_(out_folder, labels, image_extractors):
     create_dir_if_does_not_exist(json_out)
     create_dir_if_does_not_exist(image_out)
 
-    ## JSON
+    # JSON
     # Create subfolder for each label
     for label in labels:
         create_dir_if_does_not_exist(os.path.join(json_out, label))
 
-    ## IMAGE
+    # IMAGE
     # Create image subfolder for each image extractor
     for image_extractor in image_extractors:
         image_extractor_out = os.path.join(image_out, image_extractor)
         create_dir_if_does_not_exist(image_extractor_out)
         # Create subfolder for each label in each image subfolder
         for label in labels:
-            create_dir_if_does_not_exist(os.path.join(image_extractor_out, label))
+            create_dir_if_does_not_exist(
+                os.path.join(image_extractor_out, label))
 
 
 def iter_executables(in_folder):
@@ -197,7 +201,8 @@ def iter_executables(in_folder):
             yield name, exe, label
 
 
-def save_features_image(name, image, image_format, label, feature_name, out_folder):
+def save_features_image(name, image, image_format, label,
+                        feature_name, out_folder):
     """
     Save the feature image into an image file.
 
@@ -209,7 +214,8 @@ def save_features_image(name, image, image_format, label, feature_name, out_fold
         feature_name: to be used to find the exact subfolder to save the image.
         out_folder: to be used to find the exact folder to save the image.
     """
-    image_path = os.path.join(out_folder, IMAGE_FOLDER, feature_name, label, name + '.' + image_format)
+    image_path = os.path.join(out_folder, IMAGE_FOLDER,
+                              feature_name, label, name + '.' + image_format)
     image.save(image_path)
 
 
@@ -286,10 +292,12 @@ def new(conf_file, in_folder, out_folder):
     feature classes that should be used.
 
     Args:
-    in_folder: path for a folder that contains a subfolder of executables for each label.
-    out_folder: path where to store output files, will contain two main folders, json/ and image/.
-        - json/ will contain a subfolder of extracted features for each label
-        - image/ will contain a subfolder for each type of image extraction
+    in_folder: path for a folder that contains a subfolder of executables
+    for each label.
+    out_folder: path where to store output files, will contain two main
+    folders, 'json/' and 'image/'.
+        - 'json/' will contain a subfolder of extracted features for each label
+        - 'image/' will contain a subfolder for each type of image extraction
         - those folders will then contain a subfolder of images for each label
     Returns:
         An Extractor object
