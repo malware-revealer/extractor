@@ -5,8 +5,8 @@ import mrextractor
 
 PE_EXE_DIR = "./test_assets/executables/pe"
 ELF_EXE_DIR = "test_assets/executables/elf"
-EXPECTED_FEATURES_DICTS_DIR = "test_assets/expected_features_dicts"
-EXPECTED_FEATURES_IMAGES_DIR = "test_assets/expected_features_images"
+
+EXPECTED_FEATURES_DIR = "test_assets/expected_features"
 EXTRACTED_FEATURES_DIR = "test_assets/extracted_features"
 CONFS_DIR = "test_assets/extractor_confs"
 
@@ -57,7 +57,8 @@ class TestExtractor(unittest.TestCase):
 
         conf_file = "{}/{}_conf.yaml".format(CONFS_DIR, feature_name)
         out_folder = "{}/{}".format(EXTRACTED_FEATURES_DIR, feature_name)
-        expected = "{}/{}.json".format(EXPECTED_FEATURES_DICTS_DIR, feature_name)
+        expected = "{}/{}.json".format(EXPECTED_FEATURES_DIR,
+                                       feature_name)
         extracted = "{}/json/0/{}.json".format(out_folder, PE_0_HASH)
 
         extractor = mrextractor.new(conf_file, PE_EXE_DIR, out_folder)
@@ -83,7 +84,8 @@ class TestExtractor(unittest.TestCase):
 
         conf_file = "{}/{}_conf.yaml".format(CONFS_DIR, feature_name)
         out_folder = "{}/{}".format(EXTRACTED_FEATURES_DIR, feature_name)
-        expected = "{}/{}.json".format(EXPECTED_FEATURES_DICTS_DIR, feature_name)
+        expected = "{}/{}.json".format(EXPECTED_FEATURES_DIR,
+                                       feature_name)
         extracted = "{}/json/0/{}.json".format(out_folder, PE_0_HASH)
 
         extractor = mrextractor.new(conf_file, PE_EXE_DIR, out_folder)
@@ -109,7 +111,8 @@ class TestExtractor(unittest.TestCase):
 
         conf_file = "{}/{}_conf.yaml".format(CONFS_DIR, feature_name)
         out_folder = "{}/{}".format(EXTRACTED_FEATURES_DIR, feature_name)
-        expected = "{}/{}.json".format(EXPECTED_FEATURES_DICTS_DIR, feature_name)
+        expected = "{}/{}.json".format(EXPECTED_FEATURES_DIR,
+                                       feature_name)
         extracted = "{}/json/0/{}.json".format(out_folder, PE_0_HASH)
 
         extractor = mrextractor.new(conf_file, PE_EXE_DIR, out_folder)
@@ -136,7 +139,8 @@ class TestExtractor(unittest.TestCase):
 
         conf_file = "{}/{}_conf.yaml".format(CONFS_DIR, feature_name)
         out_folder = "{}/{}".format(EXTRACTED_FEATURES_DIR, feature_name)
-        expected = "{}/{}.json".format(EXPECTED_FEATURES_DICTS_DIR, feature_name)
+        expected = "{}/{}.json".format(EXPECTED_FEATURES_DIR,
+                                       feature_name)
         extracted = "{}/json/0/{}.json".format(out_folder, PE_0_HASH)
 
         extractor = mrextractor.new(conf_file, PE_EXE_DIR, out_folder)
@@ -162,7 +166,8 @@ class TestExtractor(unittest.TestCase):
 
         conf_file = "{}/{}_conf.yaml".format(CONFS_DIR, feature_name)
         out_folder = "{}/{}".format(EXTRACTED_FEATURES_DIR, feature_name)
-        expected = "{}/{}.json".format(EXPECTED_FEATURES_DICTS_DIR, feature_name)
+        expected = "{}/{}.json".format(EXPECTED_FEATURES_DIR,
+                                       feature_name)
         extracted = "{}/json/0/{}.json".format(out_folder, PE_0_HASH)
 
         extractor = mrextractor.new(conf_file, PE_EXE_DIR, out_folder)
@@ -188,7 +193,8 @@ class TestExtractor(unittest.TestCase):
 
         conf_file = "{}/{}_conf.yaml".format(CONFS_DIR, feature_name)
         out_folder = "{}/{}".format(EXTRACTED_FEATURES_DIR, feature_name)
-        expected = "{}/{}.json".format(EXPECTED_FEATURES_DICTS_DIR, feature_name)
+        expected = "{}/{}.json".format(EXPECTED_FEATURES_DIR,
+                                       feature_name)
         extracted = "{}/json/0/{}.json".format(out_folder, PE_0_HASH)
 
         extractor = mrextractor.new(conf_file, PE_EXE_DIR, out_folder)
@@ -214,7 +220,8 @@ class TestExtractor(unittest.TestCase):
 
         conf_file = "{}/{}_conf.yaml".format(CONFS_DIR, feature_name)
         out_folder = "{}/{}".format(EXTRACTED_FEATURES_DIR, feature_name)
-        expected = "{}/{}.json".format(EXPECTED_FEATURES_DICTS_DIR, feature_name)
+        expected = "{}/{}.json".format(EXPECTED_FEATURES_DIR,
+                                       feature_name)
         extracted = "{}/json/0/{}.json".format(out_folder, PE_0_HASH)
 
         extractor = mrextractor.new(conf_file, PE_EXE_DIR, out_folder)
@@ -240,7 +247,8 @@ class TestExtractor(unittest.TestCase):
 
         conf_file = "{}/{}_conf.yaml".format(CONFS_DIR, feature_name)
         out_folder = "{}/{}".format(EXTRACTED_FEATURES_DIR, feature_name)
-        expected = "{}/{}.json".format(EXPECTED_FEATURES_DICTS_DIR, feature_name)
+        expected = "{}/{}.json".format(EXPECTED_FEATURES_DIR,
+                                       feature_name)
         extracted = "{}/json/0/{}.json".format(out_folder, PE_0_HASH)
 
         extractor = mrextractor.new(conf_file, PE_EXE_DIR, out_folder)
@@ -266,7 +274,8 @@ class TestExtractor(unittest.TestCase):
 
         conf_file = "{}/{}_conf.yaml".format(CONFS_DIR, feature_name)
         out_folder = "{}/{}".format(EXTRACTED_FEATURES_DIR, feature_name)
-        expected = "{}/{}.json".format(EXPECTED_FEATURES_DICTS_DIR, feature_name)
+        expected = "{}/{}.json".format(EXPECTED_FEATURES_DIR,
+                                       feature_name)
         extracted = "{}/json/0/{}.json".format(out_folder, PE_0_HASH)
 
         extractor = mrextractor.new(conf_file, PE_EXE_DIR, out_folder)
@@ -292,7 +301,8 @@ class TestExtractor(unittest.TestCase):
 
         conf_file = "{}/{}_conf.yaml".format(CONFS_DIR, feature_name)
         out_folder = "{}/{}".format(EXTRACTED_FEATURES_DIR, feature_name)
-        expected = "{}/{}.json".format(EXPECTED_FEATURES_DICTS_DIR, feature_name)
+        expected = "{}/{}.json".format(EXPECTED_FEATURES_DIR,
+                                       feature_name)
         extracted = "{}/json/0/{}.json".format(out_folder, PE_0_HASH)
 
         extractor = mrextractor.new(conf_file, PE_EXE_DIR, out_folder)
@@ -318,7 +328,8 @@ class TestExtractor(unittest.TestCase):
 
         conf_file = "{}/{}_conf.yaml".format(CONFS_DIR, feature_name)
         out_folder = "{}/{}".format(EXTRACTED_FEATURES_DIR, feature_name)
-        expected = "{}/{}.json".format(EXPECTED_FEATURES_DICTS_DIR, feature_name)
+        expected = "{}/{}.json".format(EXPECTED_FEATURES_DIR,
+                                       feature_name)
         extracted = "{}/json/0/{}.json".format(out_folder, PE_0_HASH)
 
         extractor = mrextractor.new(conf_file, PE_EXE_DIR, out_folder)
@@ -370,7 +381,8 @@ class TestExtractor(unittest.TestCase):
 
         conf_file = "{}/{}_conf.yaml".format(CONFS_DIR, feature_name)
         out_folder = "{}/{}".format(EXTRACTED_FEATURES_DIR, feature_name)
-        expected = "{}/{}.png".format(EXPECTED_FEATURES_IMAGES_DIR, feature_name)
+        expected = "{}/{}.png".format(EXPECTED_FEATURES_DIR,
+                                      feature_name)
         extracted = "{}/image/binary_image/0/{}.png".format(
             out_folder, PE_0_HASH)
 
@@ -394,7 +406,8 @@ class TestExtractor(unittest.TestCase):
 
         conf_file = "{}/{}_conf.yaml".format(CONFS_DIR, feature_name)
         out_folder = "{}/{}".format(EXTRACTED_FEATURES_DIR, feature_name)
-        expected = "{}/{}.json".format(EXPECTED_FEATURES_DICTS_DIR, feature_name)
+        expected = "{}/{}.json".format(EXPECTED_FEATURES_DIR,
+                                       feature_name)
         extracted = "{}/json/0/{}.json".format(out_folder, PE_0_HASH)
 
         extractor = mrextractor.new(conf_file, PE_EXE_DIR, out_folder)
@@ -421,7 +434,8 @@ class TestExtractor(unittest.TestCase):
 
         conf_file = "{}/{}_conf.yaml".format(CONFS_DIR, feature_name)
         out_folder = "{}/{}".format(EXTRACTED_FEATURES_DIR, feature_name)
-        expected = "{}/{}.json".format(EXPECTED_FEATURES_DICTS_DIR, feature_name)
+        expected = "{}/{}.json".format(EXPECTED_FEATURES_DIR,
+                                       feature_name)
         extracted = "{}/json/0/{}.json".format(out_folder, ELF_0_HASH)
 
         extractor = mrextractor.new(conf_file, ELF_EXE_DIR, out_folder)
@@ -448,7 +462,8 @@ class TestExtractor(unittest.TestCase):
 
         conf_file = "{}/{}_conf.yaml".format(CONFS_DIR, feature_name)
         out_folder = "{}/{}".format(EXTRACTED_FEATURES_DIR, feature_name)
-        expected = "{}/{}.json".format(EXPECTED_FEATURES_DICTS_DIR, feature_name)
+        expected = "{}/{}.json".format(EXPECTED_FEATURES_DIR,
+                                       feature_name)
         extracted = "{}/json/0/{}.json".format(out_folder, ELF_0_HASH)
 
         extractor = mrextractor.new(conf_file, ELF_EXE_DIR, out_folder)
@@ -474,7 +489,8 @@ class TestExtractor(unittest.TestCase):
 
         conf_file = "{}/{}_conf.yaml".format(CONFS_DIR, feature_name)
         out_folder = "{}/{}".format(EXTRACTED_FEATURES_DIR, feature_name)
-        expected = "{}/{}.json".format(EXPECTED_FEATURES_DICTS_DIR, feature_name)
+        expected = "{}/{}.json".format(EXPECTED_FEATURES_DIR,
+                                       feature_name)
         extracted = "{}/json/0/{}.json".format(out_folder, ELF_0_HASH)
 
         extractor = mrextractor.new(conf_file, ELF_EXE_DIR, out_folder)
