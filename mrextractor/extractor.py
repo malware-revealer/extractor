@@ -53,7 +53,7 @@ class Extractor(object):
                         save_features_image(name, image, image_format, label, feature.name, self.out_folder)
                     else:
                         # logs duplicates feature names before merging
-                        check_duplicates(features_dict, extract_features)
+                        check_duplicates(features_dict, extracted_features)
                         features_dict.update(extracted_features)
                 except Exception as e:
                     log.error("Error while using feature class %s", feature)
