@@ -366,17 +366,6 @@ class TestExtractor(unittest.TestCase):
             theDifferenceImage.paste(pic_2, mask=diff)
             return theDifferenceImage
 
-        # conf_file = "test_assets/extractor_confs/binary_image_conf.yaml"
-        # out_folder = "test_assets/extracted_features/binary_image"
-        # extractor = mrextractor.new(conf_file, PE_EXE_DIR, out_folder)
-        # extractor.extract_batch()
-
-        # extracted_image = Image.open(
-        #     "test_assets/expected_features_images/binary_image.png")
-        # expected_image = Image.open(
-        #     out_folder + "/image/binary_image/0/071df5b74f08fb5a4ce13a6cd2e7f485.png")
-        # difference = assertImage(extracted_image, expected_image)
-
         feature_name = "binary_image"
 
         conf_file = "{}/{}_conf.yaml".format(CONFS_DIR, feature_name)
