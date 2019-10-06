@@ -52,7 +52,8 @@ class Extractor(object):
                         image_format = extracted_features['image_format']
                         save_features_image(name, image, image_format, label, feature.name, self.out_folder)
                     else:
-                        # TODO: check for duplicates
+                        # logs duplicates feature names before merging
+                        check_duplicates(features_dict, extract_features)
                         features_dict.update(extracted_features)
                 except Exception as e:
                     log.error("Error while using feature class %s", feature)
@@ -97,6 +98,23 @@ def extract_one(exe, conf):
             features_dict.update(extracted_features)
 
     return features_dict, images
+
+
+def check_duplicates(base_dict, new_dict):
+    """
+    Logs duplicates feature names in new_dict that are already found
+    in base_dict.
+
+    Args:
+        base_dict: dictionnary
+        new_dict: dictionnary
+    """
+
+    base_features = base_dict.keys()
+    new_features = new_dict.keys()
+    for feature in new_features:
+        if feature in base_features:
+            log.warning("Duplicates feature name %s", feature)
 
 
 def get_file_name(exe):
