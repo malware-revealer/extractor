@@ -6,27 +6,28 @@ import logging as log
 def create_arg_parser():
     parser = argparse.ArgumentParser(description="Description")
     parser.add_argument(
-                    "conf_file",
-                    help="The extractor configuration file"
-                    )
+        "conf_file",
+        help="The extractor configuration file"
+    )
     parser.add_argument(
-                    "input_dir",
-                    help="Input direcotry containing malwares"
-                    )
+        "input_dir",
+        help="Input direcotry containing malwares"
+    )
     parser.add_argument(
-                    "-o",
-                    "--output-dir",
-                    help="Output direcotry",
-                    default="./out"
-                    )
+        "-o",
+        "--output-dir",
+        help="Output direcotry",
+        default="./out"
+    )
     parser.add_argument(
-                    "-l",
-                    "--log-file",
-                    help="Logging file",
-                    default="MR-extractor.log"
-                    )
+        "-l",
+        "--log-file",
+        help="Logging file",
+        default="MR-extractor.log"
+    )
 
     return parser
+
 
 def main():
     arg_parser = create_arg_parser()

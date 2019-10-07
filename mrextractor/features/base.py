@@ -40,7 +40,8 @@ class BaseFeature(object):
     def extract_features(self, raw_exe: bytes) -> dict:
         """
         The method that implement the
-        To extracted the  wanted features, the output of this fuction depends on the feature
+        To extracted the  wanted features, the output of this fuction depends
+        on the feature
 
         Args:
             raw_exe: the executable to extract features from.
@@ -110,7 +111,8 @@ class URLs(BaseFeature):
 
     name = 'urls'
 
-    RE_URL = b'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
+    RE_URL = b'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|'
+    RE_URL += b'[!*(),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
 
     def extract_features(self, raw_exe):
         urls = re.findall(URLs.RE_URL, raw_exe)
@@ -174,7 +176,7 @@ class Strings(BaseFeature):
         features = {
             'strings_count': len(strings),
             'printabales': list(map(lambda item: item.decode(), strings)),
-            'avg_length':sum([len(str) for str in strings])/len(strings),
+            'avg_length': sum([len(str) for str in strings])/len(strings),
             'paths_count': len(paths),
             'paths': list(map(lambda item: item.decode(), paths)),
             'registry_count': len(registry_names),

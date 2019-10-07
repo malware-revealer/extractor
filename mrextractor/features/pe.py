@@ -5,7 +5,6 @@ Contain feature classes that are proper to the PE format
 
 from mrextractor.features import BaseFeature
 from mrextractor.features.utils import lief_from_raw
-import lief
 from lief.PE import SECTION_CHARACTERISTICS as SC
 
 
@@ -22,7 +21,8 @@ class PEGeneralFileInfo(BaseFeature):
     def can_extract(self, lief_file):
         """
         we return True if the lief_file is not None, but we can go farther,
-        and return true/false for every feature in this section, like a dict {'size':true,'imports':False .... etc}
+        and return true/false for every feature in this section,
+        like a dict {'size':true,'imports':False .... etc}
         """
         if lief_file is None:
             return False
@@ -34,28 +34,28 @@ class PEGeneralFileInfo(BaseFeature):
         """
 
         lief_file = lief_from_raw(raw_exe)
-        features={
-                'virtual_size': 0,
-                'name': '',
-                'sizeof_PFheader': 0,
-                'has_signature': False,
-                'has_debug': 0,
-                'has_relocations': 0,
-                'has_resources': 0,
-                'has_tls': 0,
-                'symbols': 0
-            }
+        features = {
+            'virtual_size': 0,
+            'name': '',
+            'sizeof_PFheader': 0,
+            'has_signature': False,
+            'has_debug': 0,
+            'has_relocations': 0,
+            'has_resources': 0,
+            'has_tls': 0,
+            'symbols': 0
+        }
         if lief_file is None:
             return features
 
-        features['virtual_size'] =  lief_file.virtual_size
-        features['name'] =  lief_file.name
+        features['virtual_size'] = lief_file.virtual_size
+        features['name'] = lief_file.name
         features['sizeof_PFheader'] = lief_file.sizeof_headers
-        features['has_signature'] =  int(lief_file.has_signature)
-        features['has_debug'] =  int(lief_file.has_debug)
+        features['has_signature'] = int(lief_file.has_signature)
+        features['has_debug'] = int(lief_file.has_debug)
         features['has_relocations'] = int(lief_file.has_relocations)
         features['has_resources'] = int(lief_file.has_resources)
-        features['has_tls'] =  int(lief_file.has_tls)
+        features['has_tls'] = int(lief_file.has_tls)
         features['symbols'] = len(lief_file.symbols)
 
         return features
@@ -83,12 +83,12 @@ class PEMSDOSHeader(BaseFeature):
 
         lief_file = lief_from_raw(raw_exe)
         features = {
-                'magic': None,
-                'pages_file': 0,
-                'checksum': 0,
-                'oem_id': 0,
-                'oem_info': 0
-            }
+            'magic': None,
+            'pages_file': 0,
+            'checksum': 0,
+            'oem_id': 0,
+            'oem_info': 0
+        }
 
         if lief_file is None:
             return features
@@ -99,7 +99,6 @@ class PEMSDOSHeader(BaseFeature):
         features['oem_id'] = lief_file.dos_header.oem_id
         features['oem_info'] = lief_file.dos_header.oem_info
         return features
-
 
 
 class PEHeader(BaseFeature):
@@ -120,24 +119,26 @@ class PEHeader(BaseFeature):
     def extract_features(self, raw_exe):
 
         lief_file = lief_from_raw(raw_exe)
-        features =  {
-                'timestamp': 0,
-                'machine': "",
-                'characteristics': [],
-                'numberof_sections': 0,
-                'numberof_symbols': 0,
-                'PE_signature': None
-            }
+        features = {
+            'timestamp': 0,
+            'machine': "",
+            'characteristics': [],
+            'numberof_sections': 0,
+            'numberof_symbols': 0,
+            'PE_signature': None
+        }
         if lief_file is None:
             return features
 
         features['timestamp'] = lief_file.header.time_date_stamps
-                # the lief machine type is not a string it gives something like this MACHINE_TYPES.AMD64
-        features['machine'] =  str(lief_file.header.machine).split('.')[-1]
-        features['characteristics'] = [str(c).split('.')[-1] for c in lief_file.header.characteristics_list]
+        # the lief machine type is not a string
+        # it gives something like this MACHINE_TYPES.AMD64
+        features['machine'] = str(lief_file.header.machine).split('.')[-1]
+        features['characteristics'] = [str(c).split(
+            '.')[-1] for c in lief_file.header.characteristics_list]
         features['numberof_sections'] = lief_file.header.numberof_sections
         features['numberof_symbols'] = lief_file.header.numberof_symbols
-                # the PE signature should be [80,69,0,0] it means PE\0\0
+        # the PE signature should be [80,69,0,0] it means PE\0\0
         features['PE_signature'] = lief_file.header.signature
 
         return features
@@ -162,40 +163,55 @@ class PEOptionalHeader(BaseFeature):
 
         lief_file = lief_from_raw(raw_exe)
         features = {
-                'subsystem': "",
-                'dll_characteristics': [],
-                'magic': "",
-                'major_image_version': 0,
-                'minor_image_version': 0,
-                'major_linker_version': 0,
-                'minor_linker_version': 0,
-                'major_operating_system_version': 0,
-                'minor_operating_system_version': 0,
-                'major_subsystem_version': 0,
-                'minor_subsystem_version': 0,
-                'sizeof_code': 0,
-                'sizeof_headers': 0,
-                'sizeof_heap_commit': 0
-            }
+            'subsystem': "",
+            'dll_characteristics': [],
+            'magic': "",
+            'major_image_version': 0,
+            'minor_image_version': 0,
+            'major_linker_version': 0,
+            'minor_linker_version': 0,
+            'major_operating_system_version': 0,
+            'minor_operating_system_version': 0,
+            'major_subsystem_version': 0,
+            'minor_subsystem_version': 0,
+            'sizeof_code': 0,
+            'sizeof_headers': 0,
+            'sizeof_heap_commit': 0
+        }
         if lief_file is None:
             return features
 
         features['subsystem'] = str(lief_file.optional_header.subsystem)
-        features['dll_characteristics'] = [str(dll_c).split('.')[-1] for dll_c in lief_file.optional_header.dll_characteristics_lists]
+        features['dll_characteristics'] = [
+            str(dll_c).split('.')[-1] for dll_c in
+            lief_file.optional_header.dll_characteristics_lists
+        ]
         features['magic'] = str(lief_file.optional_header.magic).split('.')[-1]
-        features['major_image_version'] = lief_file.optional_header.major_image_version
-        features['minor_image_version'] =  lief_file.optional_header.minor_image_version
-        features['major_linker_version'] = lief_file.optional_header.major_linker_version
-        features['minor_linker_version'] = lief_file.optional_header.minor_linker_version
-        features['major_operating_system_version'] = lief_file.optional_header.major_operating_system_version
-        features['minor_operating_system_version'] = lief_file.optional_header.minor_operating_system_version
-        features['major_subsystem_version'] = lief_file.optional_header.major_subsystem_version
-        features['minor_subsystem_version'] = lief_file.optional_header.minor_subsystem_version
-        features['sizeof_code'] = lief_file.optional_header.sizeof_code
-        features['sizeof_headers'] = lief_file.optional_header.sizeof_headers
-        features['sizeof_heap_commit'] = lief_file.optional_header.sizeof_heap_commit
+        features['major_image_version'] = \
+            lief_file.optional_header.major_image_version
+        features['minor_image_version'] = \
+            lief_file.optional_header.minor_image_version
+        features['major_linker_version'] = \
+            lief_file.optional_header.major_linker_version
+        features['minor_linker_version'] = \
+            lief_file.optional_header.minor_linker_version
+        features['major_operating_system_version'] = \
+            lief_file.optional_header.major_operating_system_version
+        features['minor_operating_system_version'] = \
+            lief_file.optional_header.minor_operating_system_version
+        features['major_subsystem_version'] = \
+            lief_file.optional_header.major_subsystem_version
+        features['minor_subsystem_version'] = \
+            lief_file.optional_header.minor_subsystem_version
+        features['sizeof_code'] = \
+            lief_file.optional_header.sizeof_code
+        features['sizeof_headers'] = \
+            lief_file.optional_header.sizeof_headers
+        features['sizeof_heap_commit'] = \
+            lief_file.optional_header.sizeof_heap_commit
 
         return features
+
 
 class PELibraries(BaseFeature):
     """
@@ -227,7 +243,7 @@ class PESections(BaseFeature):
         sections = lief_file.sections
 
         features = {
-            'sections':{},
+            'sections': {},
             'section_counts': len(sections),
         }
         for section in sections:

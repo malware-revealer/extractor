@@ -2,6 +2,18 @@ import unittest
 import json
 import mrextractor
 
+
+PE_EXE_DIR = "./test_assets/executables/pe"
+ELF_EXE_DIR = "test_assets/executables/elf"
+
+EXPECTED_FEATURES_DIR = "test_assets/expected_features"
+EXTRACTED_FEATURES_DIR = "test_assets/extracted_features"
+CONFS_DIR = "test_assets/extractor_confs"
+
+PE_0_HASH = "071df5b74f08fb5a4ce13a6cd2e7f485"
+ELF_0_HASH = "0e1631f5eaadf5ac5010530077727092"
+
+
 class TestExtractor(unittest.TestCase):
 
     def test_creation(self):
@@ -9,262 +21,330 @@ class TestExtractor(unittest.TestCase):
         Test the extractor creation using a test conf file.
         """
         conf_file = "test_assets/extractor_conf.yaml"
-        in_folder = "test_assets/executables/pe"
         out_folder = "test_assets/extracted_features"
-        extractor = mrextractor.new(conf_file, in_folder, out_folder)
+        extractor = mrextractor.new(conf_file, PE_EXE_DIR, out_folder)
         feature_list = list(extractor.features.keys())
         expected_feature_list = sorted([
-                                    'base.ByteCounts',
-                                    'base.BinaryImage',
-                                    'base.FileSize',
-                                    'base.URLs',
-                                    'base.ImportedFunctions',
-                                    'base.ExportedFunctions',
-                                    'base.Strings',
-                                    'pe.PEGeneralFileInfo',
-                                    'pe.PEMSDOSHeader',
-                                    'pe.PEHeader',
-                                    'pe.PEOptionalHeader',
-                                    'pe.PELibraries',
-                                    'pe.PESections',
-                                    'elf.ELFHeader',
-                                    'elf.ELFLibraries',
-                                    'elf.ELFSections',
-                                    ])
+            'base.ByteCounts',
+            'base.BinaryImage',
+            'base.FileSize',
+            'base.URLs',
+            'base.ImportedFunctions',
+            'base.ExportedFunctions',
+            'base.Strings',
+            'pe.PEGeneralFileInfo',
+            'pe.PEMSDOSHeader',
+            'pe.PEHeader',
+            'pe.PEOptionalHeader',
+            'pe.PELibraries',
+            'pe.PESections',
+            'elf.ELFHeader',
+            'elf.ELFLibraries',
+            'elf.ELFSections',
+        ])
         self.assertEqual(
             sorted(feature_list),
             expected_feature_list,
             "Imported features don't match"
-            )
+        )
 
     def test_PE_Header(self):
         """
         Test the extracted features of Pe Header !
         """
 
-        conf_file = "test_assets/extractor_confs/pe_header_conf.yaml"
-        in_folder = "test_assets/executables/pe"
-        out_folder = "test_assets/extracted_features/pe_header"
-        extractor = mrextractor.new(conf_file, in_folder, out_folder)
+        feature_name = "pe_header"
+
+        conf_file = "{}/{}_conf.yaml".format(CONFS_DIR, feature_name)
+        out_folder = "{}/{}".format(EXTRACTED_FEATURES_DIR, feature_name)
+        expected = "{}/{}.json".format(EXPECTED_FEATURES_DIR,
+                                       feature_name)
+        extracted = "{}/json/0/{}.json".format(out_folder, PE_0_HASH)
+
+        extractor = mrextractor.new(conf_file, PE_EXE_DIR, out_folder)
         extractor.extract_batch()
-        feature_dict = extractor.features
-        with open("test_assets/expected_features_dicts/pe_header.json" ,"rb") as f1:
+
+        with open(expected, "rb") as f1:
             expected_feature_dict = json.load(f1)
-        with open(out_folder + "/json/0/071df5b74f08fb5a4ce13a6cd2e7f485.json" ,"rb") as f2:
+        with open(extracted, "rb") as f2:
             extracted_feature_dict = json.load(f2)
+
         self.assertEqual(
             extracted_feature_dict,
             expected_feature_dict,
             "The extracted features of Pe Header don't match"
-            )
+        )
 
     def test_Libraries(self):
         """
         Test the extracted features of Libraries !
         """
 
-        conf_file = "test_assets/extractor_confs/libraries_conf.yaml"
-        in_folder = "test_assets/executables/pe"
-        out_folder = "test_assets/extracted_features/libraries"
-        extractor = mrextractor.new(conf_file, in_folder, out_folder)
+        feature_name = "libraries"
+
+        conf_file = "{}/{}_conf.yaml".format(CONFS_DIR, feature_name)
+        out_folder = "{}/{}".format(EXTRACTED_FEATURES_DIR, feature_name)
+        expected = "{}/{}.json".format(EXPECTED_FEATURES_DIR,
+                                       feature_name)
+        extracted = "{}/json/0/{}.json".format(out_folder, PE_0_HASH)
+
+        extractor = mrextractor.new(conf_file, PE_EXE_DIR, out_folder)
         extractor.extract_batch()
-        feature_dict = extractor.features
-        with open("test_assets/expected_features_dicts/libraries.json" ,"rb") as f1:
+
+        with open(expected, "rb") as f1:
             expected_feature_dict = json.load(f1)
-        with open(out_folder +  "/json/0/071df5b74f08fb5a4ce13a6cd2e7f485.json" ,"rb") as f2:
+        with open(extracted, "rb") as f2:
             extracted_feature_dict = json.load(f2)
+
         self.assertEqual(
             extracted_feature_dict,
             expected_feature_dict,
             "The extracted features of Libraries don't match"
-            )
-
+        )
 
     def test_Sections(self):
         """
         Test the extracted features of Sections !
         """
 
-        conf_file = "test_assets/extractor_confs/sections_conf.yaml"
-        in_folder = "test_assets/executables/pe"
-        out_folder = "test_assets/extracted_features/sections"
-        extractor = mrextractor.new(conf_file, in_folder, out_folder)
+        feature_name = "sections"
+
+        conf_file = "{}/{}_conf.yaml".format(CONFS_DIR, feature_name)
+        out_folder = "{}/{}".format(EXTRACTED_FEATURES_DIR, feature_name)
+        expected = "{}/{}.json".format(EXPECTED_FEATURES_DIR,
+                                       feature_name)
+        extracted = "{}/json/0/{}.json".format(out_folder, PE_0_HASH)
+
+        extractor = mrextractor.new(conf_file, PE_EXE_DIR, out_folder)
         extractor.extract_batch()
-        feature_dict = extractor.features
-        with open("test_assets/expected_features_dicts/sections.json" ,"rb") as f1:
+        # feature_dict = extractor.features
+
+        with open(expected, "rb") as f1:
             expected_feature_dict = json.load(f1)
-        with open(out_folder + "/json/0/071df5b74f08fb5a4ce13a6cd2e7f485.json", "rb") as f2:
+        with open(extracted, "rb") as f2:
             extracted_feature_dict = json.load(f2)
+
         self.assertEqual(
             extracted_feature_dict,
             expected_feature_dict,
             "The extracted features of Sections don't match"
-            )
+        )
 
     def test_general_file_info(self):
         """
         Testing the file general informations extraction .
         """
-        conf_file = "test_assets/extractor_confs/general_file_info_conf.yaml"
-        in_folder = "test_assets/executables/pe"
-        out_folder = "test_assets/extracted_features/general_file_info"
-        extractor = mrextractor.new(conf_file, in_folder, out_folder)
+
+        feature_name = "general_file_info"
+
+        conf_file = "{}/{}_conf.yaml".format(CONFS_DIR, feature_name)
+        out_folder = "{}/{}".format(EXTRACTED_FEATURES_DIR, feature_name)
+        expected = "{}/{}.json".format(EXPECTED_FEATURES_DIR,
+                                       feature_name)
+        extracted = "{}/json/0/{}.json".format(out_folder, PE_0_HASH)
+
+        extractor = mrextractor.new(conf_file, PE_EXE_DIR, out_folder)
         extractor.extract_batch()
-        features_dict = extractor.features
-        with open("test_assets/expected_features_dicts/general_file_info.json","rb") as f1:
+
+        with open(expected, "rb") as f1:
             expected_feature_dict = json.load(f1)
-        with open(out_folder + "/json/0/071df5b74f08fb5a4ce13a6cd2e7f485.json", "rb") as f2:
+        with open(extracted, "rb") as f2:
             extracted_feature_dict = json.load(f2)
+
         self.assertEqual(
             extracted_feature_dict,
             expected_feature_dict,
             "extracted general file informations don't match"
-            )
-
+        )
 
     def test_msdos_header(self):
         """
         Testing the Msdos Header extraction .
         """
-        conf_file = "test_assets/extractor_confs/msdos_header_conf.yaml"
-        in_folder = "test_assets/executables/pe"
-        out_folder = "test_assets/extracted_features/msdos_header"
-        extractor = mrextractor.new(conf_file, in_folder, out_folder)
+
+        feature_name = "msdos_header"
+
+        conf_file = "{}/{}_conf.yaml".format(CONFS_DIR, feature_name)
+        out_folder = "{}/{}".format(EXTRACTED_FEATURES_DIR, feature_name)
+        expected = "{}/{}.json".format(EXPECTED_FEATURES_DIR,
+                                       feature_name)
+        extracted = "{}/json/0/{}.json".format(out_folder, PE_0_HASH)
+
+        extractor = mrextractor.new(conf_file, PE_EXE_DIR, out_folder)
         extractor.extract_batch()
-        features_dict = extractor.features
-        with open("test_assets/expected_features_dicts/msdos_header.json","rb") as f1:
+
+        with open(expected, "rb") as f1:
             expected_feature_dict = json.load(f1)
-        with open(out_folder + "/json/0/071df5b74f08fb5a4ce13a6cd2e7f485.json", "rb") as f2:
+        with open(extracted, "rb") as f2:
             extracted_feature_dict = json.load(f2)
+
         self.assertEqual(
             extracted_feature_dict,
             expected_feature_dict,
             "msdos header dosen't match"
-            )
-
+        )
 
     def test_optional_header(self):
         """
         Testing the optional header extraction using a test conf file.
         """
-        conf_file = "test_assets/extractor_confs/optional_header_conf.yaml"
-        in_folder = "test_assets/executables/pe"
-        out_folder = "test_assets/extracted_features/optional_header"
-        extractor = mrextractor.new(conf_file, in_folder, out_folder)
+
+        feature_name = "optional_header"
+
+        conf_file = "{}/{}_conf.yaml".format(CONFS_DIR, feature_name)
+        out_folder = "{}/{}".format(EXTRACTED_FEATURES_DIR, feature_name)
+        expected = "{}/{}.json".format(EXPECTED_FEATURES_DIR,
+                                       feature_name)
+        extracted = "{}/json/0/{}.json".format(out_folder, PE_0_HASH)
+
+        extractor = mrextractor.new(conf_file, PE_EXE_DIR, out_folder)
         extractor.extract_batch()
-        features_dict = extractor.features
-        with open("test_assets/expected_features_dicts/optional_header.json","rb") as f1:
+
+        with open(expected, "rb") as f1:
             expected_feature_dict = json.load(f1)
-        with open(out_folder + "/json/0/071df5b74f08fb5a4ce13a6cd2e7f485.json", "rb") as f2:
+        with open(extracted, "rb") as f2:
             extracted_feature_dict = json.load(f2)
+
         self.assertEqual(
             extracted_feature_dict,
             expected_feature_dict,
             "Optional Header dosen't match"
-            )
-
+        )
 
     def test_file_size(self):
         """
         Testing file size extarction using a test conf file.
         """
-        conf_file = "test_assets/extractor_confs/file_size_conf.yaml"
-        in_folder = "test_assets/executables/pe"
-        out_folder = "test_assets/extracted_features/file_size"
-        extractor = mrextractor.new(conf_file, in_folder, out_folder)
+
+        feature_name = "file_size"
+
+        conf_file = "{}/{}_conf.yaml".format(CONFS_DIR, feature_name)
+        out_folder = "{}/{}".format(EXTRACTED_FEATURES_DIR, feature_name)
+        expected = "{}/{}.json".format(EXPECTED_FEATURES_DIR,
+                                       feature_name)
+        extracted = "{}/json/0/{}.json".format(out_folder, PE_0_HASH)
+
+        extractor = mrextractor.new(conf_file, PE_EXE_DIR, out_folder)
         extractor.extract_batch()
-        features_dict = extractor.features
-        with open("test_assets/expected_features_dicts/file_size.json","rb") as f1:
+
+        with open(expected, "rb") as f1:
             expected_feature_dict = json.load(f1)
-        with open(out_folder + "/json/0/071df5b74f08fb5a4ce13a6cd2e7f485.json", "rb") as f2:
+        with open(extracted, "rb") as f2:
             extracted_feature_dict = json.load(f2)
+
         self.assertEqual(
             extracted_feature_dict,
             expected_feature_dict,
             "file size dosen't match"
-            )
+        )
 
     def test_urls(self):
         """
         Testing URLs extarction using a test conf file.
         """
-        conf_file = "test_assets/extractor_confs/urls_conf.yaml"
-        in_folder = "test_assets/executables/pe"
-        out_folder = "test_assets/extracted_features/urls"
-        extractor = mrextractor.new(conf_file, in_folder, out_folder)
+
+        feature_name = "urls"
+
+        conf_file = "{}/{}_conf.yaml".format(CONFS_DIR, feature_name)
+        out_folder = "{}/{}".format(EXTRACTED_FEATURES_DIR, feature_name)
+        expected = "{}/{}.json".format(EXPECTED_FEATURES_DIR,
+                                       feature_name)
+        extracted = "{}/json/0/{}.json".format(out_folder, PE_0_HASH)
+
+        extractor = mrextractor.new(conf_file, PE_EXE_DIR, out_folder)
         extractor.extract_batch()
-        features_dict = extractor.features
-        with open("test_assets/expected_features_dicts/urls.json","rb") as f1:
+
+        with open(expected, "rb") as f1:
             expected_feature_dict = json.load(f1)
-        with open(out_folder + "/json/0/071df5b74f08fb5a4ce13a6cd2e7f485.json", "rb") as f2:
+        with open(extracted, "rb") as f2:
             extracted_feature_dict = json.load(f2)
+
         self.assertEqual(
             extracted_feature_dict,
             expected_feature_dict,
             "urls don't match"
-            )
-
+        )
 
     def test_imported_functions(self):
         """
         Testing imported functions extarction using a test conf file.
         """
-        conf_file = "test_assets/extractor_confs/imported_functions_conf.yaml"
-        in_folder = "test_assets/executables/pe"
-        out_folder = "test_assets/extracted_features/imported_functions"
-        extractor = mrextractor.new(conf_file, in_folder, out_folder)
+
+        feature_name = "imported_functions"
+
+        conf_file = "{}/{}_conf.yaml".format(CONFS_DIR, feature_name)
+        out_folder = "{}/{}".format(EXTRACTED_FEATURES_DIR, feature_name)
+        expected = "{}/{}.json".format(EXPECTED_FEATURES_DIR,
+                                       feature_name)
+        extracted = "{}/json/0/{}.json".format(out_folder, PE_0_HASH)
+
+        extractor = mrextractor.new(conf_file, PE_EXE_DIR, out_folder)
         extractor.extract_batch()
-        features_dict = extractor.features
-        with open("test_assets/expected_features_dicts/imported_functions.json","rb") as f1:
+
+        with open(expected, "rb") as f1:
             expected_feature_dict = json.load(f1)
-        with open(out_folder + "/json/0/071df5b74f08fb5a4ce13a6cd2e7f485.json", "rb") as f2:
+        with open(extracted, "rb") as f2:
             extracted_feature_dict = json.load(f2)
+
         self.assertEqual(
             extracted_feature_dict,
             expected_feature_dict,
             "imported functions don't match"
-            )
-
+        )
 
     def test_byte_counts(self):
         """
         Testing the byte counts extraction using a test conf file.
         """
-        conf_file = "test_assets/extractor_confs/byte_counts_conf.yaml"
-        in_folder = "test_assets/executables/pe"
-        out_folder = "test_assets/extracted_features/byte_counts"
-        extractor = mrextractor.new(conf_file, in_folder, out_folder)
+
+        feature_name = "byte_counts"
+
+        conf_file = "{}/{}_conf.yaml".format(CONFS_DIR, feature_name)
+        out_folder = "{}/{}".format(EXTRACTED_FEATURES_DIR, feature_name)
+        expected = "{}/{}.json".format(EXPECTED_FEATURES_DIR,
+                                       feature_name)
+        extracted = "{}/json/0/{}.json".format(out_folder, PE_0_HASH)
+
+        extractor = mrextractor.new(conf_file, PE_EXE_DIR, out_folder)
         extractor.extract_batch()
-        features_dict = extractor.features
-        with open("test_assets/expected_features_dicts/byte_counts.json","rb") as f1:
+
+        with open(expected, "rb") as f1:
             expected_feature_dict = json.load(f1)
-        with open(out_folder + "/json/0/071df5b74f08fb5a4ce13a6cd2e7f485.json", "rb") as f2:
+        with open(extracted, "rb") as f2:
             extracted_feature_dict = json.load(f2)
+
         self.assertEqual(
             extracted_feature_dict,
             expected_feature_dict,
             "Byte Counts dosen't match"
-            )
+        )
 
     def test_exported_functions(self):
         """
         Testing exported functions extarction using a test conf file.
         """
-        conf_file = "test_assets/extractor_confs/exported_functions_conf.yaml"
-        in_folder = "test_assets/executables/pe"
-        out_folder = "test_assets/extracted_features/exported_functions"
-        extractor = mrextractor.new(conf_file, in_folder, out_folder)
+
+        feature_name = "exported_functions"
+
+        conf_file = "{}/{}_conf.yaml".format(CONFS_DIR, feature_name)
+        out_folder = "{}/{}".format(EXTRACTED_FEATURES_DIR, feature_name)
+        expected = "{}/{}.json".format(EXPECTED_FEATURES_DIR,
+                                       feature_name)
+        extracted = "{}/json/0/{}.json".format(out_folder, PE_0_HASH)
+
+        extractor = mrextractor.new(conf_file, PE_EXE_DIR, out_folder)
         extractor.extract_batch()
-        features_dict = extractor.features
-        with open("test_assets/expected_features_dicts/exported_functions.json","rb") as f1:
+
+        with open(expected, "rb") as f1:
             expected_feature_dict = json.load(f1)
-        with open(out_folder + "/json/0/071df5b74f08fb5a4ce13a6cd2e7f485.json", "rb") as f2:
+        with open(extracted, "rb") as f2:
             extracted_feature_dict = json.load(f2)
+
         self.assertEqual(
             extracted_feature_dict,
             expected_feature_dict,
             "exported functions don't match"
-            )
+        )
 
     def test_binary_image(self):
         """
@@ -286,41 +366,52 @@ class TestExtractor(unittest.TestCase):
             theDifferenceImage.paste(pic_2, mask=diff)
             return theDifferenceImage
 
-        conf_file = "test_assets/extractor_confs/binary_image_conf.yaml"
-        in_folder = "test_assets/executables/pe"
-        out_folder = "test_assets/extracted_features/binary_image"
-        extractor = mrextractor.new(conf_file, in_folder, out_folder)
+        feature_name = "binary_image"
+
+        conf_file = "{}/{}_conf.yaml".format(CONFS_DIR, feature_name)
+        out_folder = "{}/{}".format(EXTRACTED_FEATURES_DIR, feature_name)
+        expected = "{}/{}.png".format(EXPECTED_FEATURES_DIR,
+                                      feature_name)
+        extracted = "{}/image/binary_image/0/{}.png".format(
+            out_folder, PE_0_HASH)
+
+        extractor = mrextractor.new(conf_file, PE_EXE_DIR, out_folder)
         extractor.extract_batch()
-        extracted_image_features = extractor.features
-        extracted_image =  Image.open("test_assets/expected_features_images/binary_image.png")
-        expected_image = Image.open(out_folder + "/image/binary_image/0/071df5b74f08fb5a4ce13a6cd2e7f485.png")
+        extracted_image = Image.open(expected)
+        expected_image = Image.open(extracted)
         difference = assertImage(extracted_image, expected_image)
 
-        """
-        #getbbox(): verifying if all pixels are black it return 'None' if they are
+        # getbbox(): verifying if all pixels are black
+        # it return 'None' if they are
         # if not then the pixels where they are changed
-        """
         self.assertTrue(not difference.getbbox(), "Binary images don't match")
 
     def test_strings(self):
         """
         Testing exported functions extarction using a test conf file.
         """
-        conf_file = "test_assets/extractor_confs/strings_conf.yaml"
-        in_folder = "test_assets/executables/pe"
-        out_folder = "test_assets/extracted_features/strings"
-        extractor = mrextractor.new(conf_file, in_folder, out_folder)
+
+        feature_name = "strings"
+
+        conf_file = "{}/{}_conf.yaml".format(CONFS_DIR, feature_name)
+        out_folder = "{}/{}".format(EXTRACTED_FEATURES_DIR, feature_name)
+        expected = "{}/{}.json".format(EXPECTED_FEATURES_DIR,
+                                       feature_name)
+        extracted = "{}/json/0/{}.json".format(out_folder, PE_0_HASH)
+
+        extractor = mrextractor.new(conf_file, PE_EXE_DIR, out_folder)
         extractor.extract_batch()
-        features_dict = extractor.features
-        with open("test_assets/expected_features_dicts/strings.json","rb") as f1:
+
+        with open(expected, "rb") as f1:
             expected_feature_dict = json.load(f1)
-        with open(out_folder + "/json/0/071df5b74f08fb5a4ce13a6cd2e7f485.json", "rb") as f2:
+        with open(extracted, "rb") as f2:
             extracted_feature_dict = json.load(f2)
+
         self.assertEqual(
             extracted_feature_dict,
             expected_feature_dict,
             "strings don't match"
-            )
+        )
 
     def test_elf_header(self):
         """
@@ -328,15 +419,20 @@ class TestExtractor(unittest.TestCase):
         ELF file.
         """
 
-        conf_file = "test_assets/extractor_confs/elf_header_conf.yaml"
-        in_folder = "test_assets/executables/elf"
-        out_folder = "test_assets/extracted_features/elf_header"
-        extractor = mrextractor.new(conf_file, in_folder, out_folder)
+        feature_name = "elf_header"
+
+        conf_file = "{}/{}_conf.yaml".format(CONFS_DIR, feature_name)
+        out_folder = "{}/{}".format(EXTRACTED_FEATURES_DIR, feature_name)
+        expected = "{}/{}.json".format(EXPECTED_FEATURES_DIR,
+                                       feature_name)
+        extracted = "{}/json/0/{}.json".format(out_folder, ELF_0_HASH)
+
+        extractor = mrextractor.new(conf_file, ELF_EXE_DIR, out_folder)
         extractor.extract_batch()
 
-        with open("test_assets/expected_features_dicts/elf_header.json","rb") as f1:
+        with open(expected, "rb") as f1:
             expected_feature_dict = json.load(f1)
-        with open(out_folder + "/json/0/0e1631f5eaadf5ac5010530077727092.json", "rb") as f2:
+        with open(extracted, "rb") as f2:
             extracted_feature_dict = json.load(f2)
 
         self.assertEqual(
@@ -345,22 +441,26 @@ class TestExtractor(unittest.TestCase):
             "ELF header don't match the expected output"
         )
 
-
     def test_elf_sections(self):
         """
         Testing the extraction of informations from the sections of an example
         ELF file.
         """
 
-        conf_file = "test_assets/extractor_confs/elf_sections_conf.yaml"
-        in_folder = "test_assets/executables/elf"
-        out_folder = "test_assets/extracted_features/elf_sections"
-        extractor = mrextractor.new(conf_file, in_folder, out_folder)
+        feature_name = "elf_sections"
+
+        conf_file = "{}/{}_conf.yaml".format(CONFS_DIR, feature_name)
+        out_folder = "{}/{}".format(EXTRACTED_FEATURES_DIR, feature_name)
+        expected = "{}/{}.json".format(EXPECTED_FEATURES_DIR,
+                                       feature_name)
+        extracted = "{}/json/0/{}.json".format(out_folder, ELF_0_HASH)
+
+        extractor = mrextractor.new(conf_file, ELF_EXE_DIR, out_folder)
         extractor.extract_batch()
 
-        with open("test_assets/expected_features_dicts/elf_sections.json","rb") as f1:
+        with open(expected, "rb") as f1:
             expected_feature_dict = json.load(f1)
-        with open(out_folder + "/json/0/0e1631f5eaadf5ac5010530077727092.json", "rb") as f2:
+        with open(extracted, "rb") as f2:
             extracted_feature_dict = json.load(f2)
 
         self.assertEqual(
@@ -368,22 +468,26 @@ class TestExtractor(unittest.TestCase):
             expected_feature_dict,
             "ELF Sections don't match the expected output"
         )
-
 
     def test_elf_libraries(self):
         """
         Testing the extraction of ELF library names
         """
 
-        conf_file = "test_assets/extractor_confs/elf_libraries_conf.yaml"
-        in_folder = "test_assets/executables/elf"
-        out_folder = "test_assets/extracted_features/elf_libraries"
-        extractor = mrextractor.new(conf_file, in_folder, out_folder)
+        feature_name = "elf_libraries"
+
+        conf_file = "{}/{}_conf.yaml".format(CONFS_DIR, feature_name)
+        out_folder = "{}/{}".format(EXTRACTED_FEATURES_DIR, feature_name)
+        expected = "{}/{}.json".format(EXPECTED_FEATURES_DIR,
+                                       feature_name)
+        extracted = "{}/json/0/{}.json".format(out_folder, ELF_0_HASH)
+
+        extractor = mrextractor.new(conf_file, ELF_EXE_DIR, out_folder)
         extractor.extract_batch()
 
-        with open("test_assets/expected_features_dicts/elf_libraries.json","rb") as f1:
+        with open(expected, "rb") as f1:
             expected_feature_dict = json.load(f1)
-        with open(out_folder + "/json/0/0e1631f5eaadf5ac5010530077727092.json", "rb") as f2:
+        with open(extracted, "rb") as f2:
             extracted_feature_dict = json.load(f2)
 
         self.assertEqual(
@@ -391,7 +495,6 @@ class TestExtractor(unittest.TestCase):
             expected_feature_dict,
             "ELF Sections don't match the expected output"
         )
-
 
 
 if __name__ == '__main__':
